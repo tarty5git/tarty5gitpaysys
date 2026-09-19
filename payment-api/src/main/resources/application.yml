@@ -1,0 +1,18 @@
+payment:
+  gateway:
+    stripe:
+      enabled: true
+      poolSize: 3
+      api-key: "sk_test_stripe_sample_key"
+    paypal:
+      enabled: true
+      poolSize: 2
+      client-id: "paypal_client_id"
+      client-secret: "paypal_client_secret"
+    klarna:
+      enabled: false
+    razorpay:
+      enabled: true
+      poolSize: 4
+      key-id: "rzp_test_123"
+      key-secret: "rzp_secret_456"
