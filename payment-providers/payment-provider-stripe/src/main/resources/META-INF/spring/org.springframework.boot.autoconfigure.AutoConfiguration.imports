@@ -1,1 +1,1 @@
-com.payment.platform.provider.stripe.config.StripeAutoConfiguration
+com.cth.job.provider.stripe.config.StripeAutoConfiguration

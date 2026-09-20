@@ -24,7 +24,7 @@ Add `payment-providers/payment-provider-adyen/pom.xml`:
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.payment.platform</groupId>
+        <groupId>com.cth.job</groupId>
         <artifactId>payment-providers</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
@@ -34,7 +34,7 @@ Add `payment-providers/payment-provider-adyen/pom.xml`:
 
     <dependencies>
         <dependency>
-            <groupId>com.payment.platform</groupId>
+            <groupId>com.cth.job</groupId>
             <artifactId>payment-core</artifactId>
         </dependency>
         <dependency>
@@ -82,7 +82,7 @@ public enum PaymentProvider {
 ### 1. Configuration Properties (`AdyenProperties.java`)
 
 ```java
-package com.payment.platform.provider.adyen.config;
+package com.cth.job.provider.adyen.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -100,12 +100,12 @@ public class AdyenProperties {
 ### 2. Payment Handler Worker (`AdyenPaymentHandler.java`)
 
 ```java
-package com.payment.platform.provider.adyen.handler;
+package com.cth.job.provider.adyen.handler;
 
-import com.payment.platform.core.contract.PaymentHandler;
-import com.payment.platform.core.dto.*;
-import com.payment.platform.core.enums.TransactionStatus;
-import com.payment.platform.provider.adyen.config.AdyenProperties;
+import com.cth.job.core.contract.PaymentHandler;
+import com.cth.job.core.dto.*;
+import com.cth.job.core.enums.TransactionStatus;
+import com.cth.job.provider.adyen.config.AdyenProperties;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -163,13 +163,13 @@ public class AdyenPaymentHandler implements PaymentHandler {
 ### 3. Payment Gateway Router (`AdyenPaymentRouter.java`)
 
 ```java
-package com.payment.platform.provider.adyen.router;
+package com.cth.job.provider.adyen.router;
 
-import com.payment.platform.core.contract.PaymentHandler;
-import com.payment.platform.core.contract.PaymentRouter;
-import com.payment.platform.core.dto.*;
-import com.payment.platform.core.enums.PaymentProvider;
-import com.payment.platform.core.exception.PaymentCapacityExceededException;
+import com.cth.job.core.contract.PaymentHandler;
+import com.cth.job.core.contract.PaymentRouter;
+import com.cth.job.core.dto.*;
+import com.cth.job.core.enums.PaymentProvider;
+import com.cth.job.core.exception.PaymentCapacityExceededException;
 
 import java.util.Collections;
 import java.util.List;
@@ -234,7 +234,7 @@ public class AdyenPaymentRouter implements PaymentRouter {
         if (available.isEmpty()) {
             throw new PaymentCapacityExceededException("Adyen capacity exceeded: No available payment handlers in pool.");
         }
-        int index = Math.abs(roundRobinIndex.getAndIncrement() % available.size());
+        int index = (roundRobinIndex.getAndIncrement() & Integer.MAX_VALUE) % available.size();
         return available.get(index);
     }
 }
@@ -243,11 +243,11 @@ public class AdyenPaymentRouter implements PaymentRouter {
 ### 4. Auto-Configuration (`AdyenAutoConfiguration.java`)
 
 ```java
-package com.payment.platform.provider.adyen.config;
+package com.cth.job.provider.adyen.config;
 
-import com.payment.platform.core.contract.PaymentHandler;
-import com.payment.platform.provider.adyen.handler.AdyenPaymentHandler;
-import com.payment.platform.provider.adyen.router.AdyenPaymentRouter;
+import com.cth.job.core.contract.PaymentHandler;
+import com.cth.job.provider.adyen.handler.AdyenPaymentHandler;
+import com.cth.job.provider.adyen.router.AdyenPaymentRouter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -279,7 +279,7 @@ public class AdyenAutoConfiguration {
 Create file `src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports` in `payment-provider-adyen`:
 
 ```text
-com.payment.platform.provider.adyen.config.AdyenAutoConfiguration
+com.cth.job.provider.adyen.config.AdyenAutoConfiguration
 ```
 
 ---
@@ -289,7 +289,7 @@ com.payment.platform.provider.adyen.config.AdyenAutoConfiguration
 1. Add the Maven dependency to `payment-api/pom.xml`:
 ```xml
 <dependency>
-    <groupId>com.payment.platform</groupId>
+    <groupId>com.cth.job</groupId>
     <artifactId>payment-provider-adyen</artifactId>
 </dependency>
 ```

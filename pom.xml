@@ -8,15 +8,15 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
-    <groupId>com.payment.platform</groupId>
+    <groupId>com.cth.job</groupId>
     <artifactId>payment-platform</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>payment-platform</name>
-    <description>Extensible High-Throughput International Payment Platform</description>
+    <description>Extensible High-Throughput International Payment Platform with Security and Multi-DB</description>
 
     <modules>
         <module>payment-core</module>
@@ -30,39 +30,45 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <springdoc.version>2.5.0</springdoc.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.payment.platform</groupId>
+                <groupId>com.cth.job</groupId>
                 <artifactId>payment-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.payment.platform</groupId>
+                <groupId>com.cth.job</groupId>
                 <artifactId>payment-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.payment.platform</groupId>
+                <groupId>com.cth.job</groupId>
                 <artifactId>payment-provider-stripe</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.payment.platform</groupId>
+                <groupId>com.cth.job</groupId>
                 <artifactId>payment-provider-paypal</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.payment.platform</groupId>
+                <groupId>com.cth.job</groupId>
                 <artifactId>payment-provider-klarna</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.payment.platform</groupId>
+                <groupId>com.cth.job</groupId>
                 <artifactId>payment-provider-razorpay</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
